@@ -12,3 +12,11 @@ An example AIMD trajectory is shown as the black curve overlayed on the heatmap 
 
 By making use of this library, a number Ninterpolation of frames can be used as inputs for the IMRR to predict energy gradients along the AIMD trajectory.
 
+```
+./build_IMRR.sh
+./bin/main.o
+```
+To visualize the data and make a figure like above, you can use the pre-made gnuplotfile supplied after changing the inputfile:
+```
+gnuplot heatmapTrajectoryTrace.gnu
+```
