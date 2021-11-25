@@ -1,4 +1,4 @@
-# IMRR
+# Interpolating Moving Ridge Regression
 
 The Interpolating Moving Ridge Regression (IMRR) predicts energy gradients of molecular geometries given some number of configurations with known energy gradients.
 
@@ -8,7 +8,7 @@ Here, they are indexed by two collective variables (CVs), the distance between t
 A portion of the total number of frames are displayed below (those with CVs in the range (6,6) to (7,7)).
 An example AIMD trajectory is shown as the black curve overlayed on the heatmap below.
 
-By making use of this library, a number Ninterpolation of frames can be used as inputs for the IMRR to predict energy gradients along the AIMD trajectory.
-
 ![Alt text](heatmapTrajectoryTrace.png?raw=true "Example Trajectory")
+
+By making use of this library, a number Ninterpolation of frames can be used as inputs for the IMRR to predict energy gradients along the AIMD trajectory.
 
