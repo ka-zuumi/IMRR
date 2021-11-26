@@ -1,7 +1,7 @@
 set terminal pngcairo enhanced size 1200,600
 set output "heatmapTrajectoryTrace.png"
 
-inputfile="HBrCO2library/expcompareGradientsInGridtoNWChemGradients2_history3_20/data/interpolation.dat"
+inputfile="HBrCO2library/expcompareGradientsInGridtoNWChemGradients0_history3_20/data/interpolation.dat"
 Nhistory=3
 
 set multiplot

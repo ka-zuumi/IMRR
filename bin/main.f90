@@ -74,16 +74,14 @@ program main
     end do
     Vprev= V
 
-    write(filechannel3,FMT="(2(F7.3,1x),I2,1x,8(ES10.3,1x))")&
+    write(filechannel3,FMT="(2(F7.3,1x),I4,1x,5(ES10.3,1x))")&
         vals(1), vals(2),&
         Ninterpolation,&
-        largest_weighted_SIs2(1),&
-        largest_weighted_SIs(1),&
-        SIbuffer1(1,1), interpolated_SIs(1),&
-        SIbuffer1(2,1), interpolated_SIs(2),&
+        SIbuffer1(1,1),&
         sqrt(3*sum(&
                  (PDOT(1:NI)-reshape(candidate_gradient,(/ NI /))&
                  )**2)/NI) / NWChemConversion,&
+        interpolated_SIs(1),largest_weighted_SIs2(1),&
         sqrt(3*sum(&
                  (PDOT(1:NI)-reshape(approx_gradient,(/ NI /))&
                  )**2)/NI) / NWChemConversion

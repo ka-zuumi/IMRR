@@ -16,6 +16,25 @@ By making use of this library, a number Ninterpolation of frames can be used as 
 ./build_IMRR.sh
 ./bin/main.o
 ```
+
+All output from the analysis on this system is placed in a folder in the library. In this case, the analysis is placed in "HBrCO2library/expcompareGradientsInGridtoNWChemGradients0\_history3\_20/". The name of the output folder is specified in the ANALYSIS.f90 file. Errors between the predicted and true forces, as well as other variables, are recorded in the file "data/interpolation.dat" within the output folder. For the trajectory in this example, errors and other variables are printed at each step.
+
+```
+├── bin
+├── build_IMRR.sh
+├── HBrCO2library
+│   └── expcompareGradientsInGridtoNWChemGradients0_history3_20
+│       └── data
+│           └── interpolation.dat
+│   └── 001
+│       └── grid
+├── heatmapTrajectoryTrace.gnu
+├── heatmapTrajectoryTrace.png
+├── README.md
+├── readtrajectories.txt
+└── VENUSwNWChem-1.out
+```
+
 To visualize the data and make a figure like above, you can use the pre-made gnuplotfile supplied after changing the inputfile:
 ```
 gnuplot heatmapTrajectoryTrace.gnu

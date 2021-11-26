@@ -212,7 +212,7 @@ integer,intent(out),optional :: order,number_of_frames,neighbor_check
 ! for intel fortran
 !integer*8,intent(out),optional :: order,number_of_frames,neighbor_check
 !
-!
+
 integer :: population
 integer :: chosen_index
 integer :: OMP_GET_THREAD_NUM
@@ -458,9 +458,6 @@ if ((interpolation_flag).and.(Ninterpolation > 1)) then
         gradient = gradient * 0.529177249d0 / ( 627.5095d0 * 0.04184d0 )
     end select
 
-!   call getSIs(coords+new_coords,&
-!               new_coords,new_U,new_SI)
-
     min_SIs = SIbuffer1(:,1)
     interpolated_SIs = sqrt(sum(new_coords(1:3,1:Natoms)**2)/Natoms)
 
@@ -474,19 +471,11 @@ else
         gradient = gradient * 0.529177249d0 / ( 627.5095d0 * 0.04184d0 )
     end select
 
-!   largest_weighted_rmsd = min_rmsd
-!   largest_weighted_rmsd2 = min_rmsd**2
-
-!   interpolated_CMdiff = SIbuffer1(2,1)
-
     min_SIs = SIbuffer1(:,1)
     interpolated_SIs = SIbuffer1(:,1)
     largest_weighted_SIs = SIbuffer1(:,1)
     largest_weighted_SIs2 = SIbuffer1(:,1)**2
 
-    print *, "RMSD:", SIbuffer1(Nsort,1), " vals:", &
-                      valsbuffer1(:,1), " W:", 1.0d0
-    
 end if
 
 min_rmsd = interpolated_SIs(Nsort)
@@ -588,7 +577,6 @@ implicit none
 
 integer :: i,j,k,l
 
-!
 real(dp), dimension(3,Natoms), intent(in) :: coords
 real(dp), dimension(3,Natoms) :: new_coords
 real(dp), dimension(3,Natoms), intent(out) :: gradient
@@ -649,9 +637,6 @@ if ((interpolation_flag).and.(Ninterpolation > 1)) then
         gradient = gradient * 0.529177249d0 / ( 627.5095d0 * 0.04184d0 )
     end select
 
-!   call getSIs(coords+new_coords,&
-!               new_coords,new_U,new_SI)
-
     min_SIs = SIbuffer1(:,1)
     interpolated_SIs = sqrt(sum(new_coords(1:3,1:Natoms)**2)/Natoms)
 
@@ -665,19 +650,11 @@ else
         gradient = gradient * 0.529177249d0 / ( 627.5095d0 * 0.04184d0 )
     end select
 
-!   largest_weighted_rmsd = min_rmsd
-!   largest_weighted_rmsd2 = min_rmsd**2
-
-!   interpolated_CMdiff = SIbuffer1(2,1)
-
     min_SIs = SIbuffer1(:,1)
     interpolated_SIs = SIbuffer1(:,1)
     largest_weighted_SIs = SIbuffer1(:,1)
     largest_weighted_SIs2 = SIbuffer1(:,1)**2
 
-    print *, "RMSD:", SIbuffer1(Nsort,1), " vals:", &
-                      valsbuffer1(:,1), " W:", 1.0d0
-    
 end if
 
 min_rmsd = interpolated_SIs(Nsort)
@@ -738,8 +715,6 @@ real :: real1, real2
 Ninterpolation = min(Ninterpolation,&
         Ninterpolation_cap)
 
-print *, "interpolation start"
-
 allocate(frame_weights(Ninterpolation),&
          outputCLS(3*NATOMS+Ninterpolation),&
          restraints(1,Ninterpolation),&
@@ -793,11 +768,7 @@ do i = 1, Ninterpolation
         largest_weighted_SIs2(j) = &
                 largest_weighted_SIs2(j) +&
                 abs(weight)*((SIbuffer1(j,i)**2))
-!               (weight*(SIbuffer1(j,i)**2))**2
     end do
-
-    print *, "RMSD:", SIbuffer1(Nsort,i), " vals:", &
-                      valsbuffer1(:,i), " W:", weight
 
     weighted_coords = weighted_coords + &
              weight * reshape(inputCLS(1:3*NATOMS,i),&
@@ -808,14 +779,9 @@ do i = 1, Ninterpolation
                              gradientbuffer1(:,:,i))
 end do
 
-!largest_weighted_SIs2 = &
-!        sqrt(largest_weighted_SIs2 / Natoms)
-
 deallocate(frame_weights,outputCLS,&
            restraints,restraint_values,&
            minimized_differences2)
-
-print *, "interpolation end"
 
 return
 
@@ -882,8 +848,6 @@ RKHS_KernelSize = min(100,Ninterpolation)
 do i = 1, RKHS_KernelSize
     call getSIs(coordsbuffer1(:,:,i),&
             coords2,new_U,new_SI)
-!   libUgradients(:,i) = reshape(matmul(&
-!           new_U,gradientbuffer1(:,:,i)),(/Ncoords/))
 
     RKHScoordsbuffer1(1:3,1:Natoms,i) = coords2
     RKHSgradientbuffer1(1:3,1:Natoms,i) = &
@@ -908,8 +872,6 @@ else
 
 !open(6666,file="/home/kazuumi/rsun_lts/kazuumi/venus-NEW/training.xyz")
 
-print *, "got here A"
-
 ! The old one:
 !RKHS_KernelSize = 706
 !open(6666,file="/home/kazuumi/rsun_lts/kazuumi/venus-NEW/library700_uniformCV_entireRegion.xyz")
@@ -918,12 +880,9 @@ print *, "got here A"
 RKHS_KernelSize = 700
 open(6666,file="/home/kazuumi/rsun_lts/kazuumi/venus-NEW/newreactive-0.6mil_train.xyz")
 
-print *, "got here B"
 do i = 1, RKHS_KernelSize
     read(6666,FMT=*)
-print *, "got here C", i
     do j = 1, Natoms
-!       read(6666,FMT="(6(E12.5,1x))") &
         read(6666,FMT=*) &
                 RKHScoordsbuffer1(1:3,j,i),&
                 RKHSgradientbuffer1(1:3,j,i)
@@ -942,7 +901,6 @@ print *, &
             (i-1)*Ncoords+1:i*Ncoords))
 end do
 close(6666)
-print *, "got here D"
 RKHS_updateInverseKernel_counter = 100000 ! Basically, never update (global)
 
 call storeRKHSJacobian(inputFeatures(1:Nfeatures,1:RKHS_KernelSize),&
@@ -956,11 +914,6 @@ call getCoulombMatrixVector(reshape(&
          RKHScoordsbuffer1(1:3,1:Natoms,1),(/Ncoords/)),Feature1)
 call getCoulombMatrixGradient(reshape(&
          RKHScoordsbuffer1(1:3,1:Natoms,1),(/Ncoords/)),Jacobian1)
-
-!../alpha3667089.dat  ../alpha4710512.dat  ../alpha6499445.dat
-!../alpha7288897.dat  ../alpha9421774.dat
-!../alpha4385781.dat  ../alpha5685752.dat  ../alpha7154585.dat
-!../alpha9165360.dat
 
 open(6666,file="/home/kazuumi/rsun_lts/kazuumi/alpha3667089.dat")
 read(6666,FMT=*) RKHS_F(1:Ncoords*RKHS_KernelSize)
@@ -1096,8 +1049,6 @@ call getCoulombMatrixGradient(reshape(&
 
 end if
 
-print *, "got here E"
-
 else
     if (Ninterpolation >= 100) then
         RKHS_updateInverseKernel_counter = &
@@ -1106,83 +1057,14 @@ else
 end if
 
 if (useLocalRKHS_flag) then
-!call getRKHSTarget(Ncoords,Nfeatures,Ninterpolation,&
 call getRKHSTarget(Ncoords,Nfeatures,RKHS_KernelSize,&
             Feature1(1:Nfeatures),Jacobian1(1:Nfeatures,1:Ncoords),&
             outputF(1:Ncoords))
-!           inputFeatures(1:Nfeatures,1),inputJacobians(1:Nfeatures,1:Ncoords),&
 
 else
 call getRKHSTarget_fromalpha(Ncoords,Nfeatures,RKHS_KernelSize,&
             Feature1(1:Nfeatures),Jacobian1(1:Nfeatures,1:Ncoords),&
             outputF(1:Ncoords))
-end if
-
-print *, "got here F"
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! temporary (test)
-!if (Ninterpolation > 10) then
-if (.false.) then
-
-RKHS_KernelSize = Ninterpolation
-RKHS_updateInverseKernel_counter = 0 !100
-call storeRKHSInverseKernel(inputFeatures(1:Nfeatures,1:RKHS_KernelSize),&
-            inputJacobians(1:Nfeatures,1:Ncoords*RKHS_KernelSize),&
-            Ncoords,Nfeatures,RKHS_KernelSize,&
-            reshape(libUgradients(1:Ncoords,1:RKHS_KernelSize),(/Ncoords*RKHS_KernelSize/)))
-
-call getRKHSTarget(Ncoords,Nfeatures,RKHS_KernelSize,&
-            Feature1(1:Nfeatures),Jacobian1(1:Nfeatures,1:Ncoords),&
-            outputF(1:Ncoords))
-
-print *, "getRKHSTarget input (training) printed!"
-open(6666,file="/home/kazuumi/rsun_lts/kazuumi/venus-NEW/RKHStraining.xyz")
-do i = 1, Ninterpolation
-print *, i
-    call getSIs(coordsbuffer1(:,:,i),&
-            coords2,new_U,new_SI)
-    write(6666,FMT="(I3)") Natoms
-    write(6666,FMT="(A,I3)") "training point", i
-    k=1
-    do j = 1, Natoms
-        write(6666,FMT="(2(1x,3(F9.5,1x)))") &
-            coords2(1:3,j), libUgradients(k:k+2,i)
-        k=k+3
-    end do
-end do
-
-weighted_gradient = reshape(outputF(1:Ncoords),(/3,NATOMS/))
-print *, "getRKHSTarget (test) printed!"
-k=1
-write(6666,FMT="(I3)") Natoms
-write(6666,FMT="(A,I3)") "test point RKHS output", 1
-do i = 1, Natoms
-    write(6666,FMT="(2(1x,3(F9.5,1x)))") &
-        coords_target(1:3,i), outputF(k:k+2)
-    k=k+3
-end do
-close(6666)
-
-stop
-end if
-
-if (.false.) then
-allocate(Omega(Ncoords,Ncoords*Ninterpolation))
-call sVVFwJ(inputFeatures(1:Nfeatures,1:RKHS_KernelSize),&
-            inputJacobians(1:Nfeatures,1:Ncoords*RKHS_KernelSize),&
-            Ncoords,Nfeatures,RKHS_KernelSize,&
-            Feature1(1:Nfeatures),Jacobian1(1:Nfeatures,1:Ncoords),&
-            Omega(1:Ncoords,1:Ncoords*RKHS_KernelSize))
-weighted_gradient = reshape(matmul(Omega(1:Ncoords,1:Ncoords*RKHS_KernelSize),&
-                            reshape(libUgradients(1:Ncoords,1:RKHS_KernelSize),&
-                                    (/Ncoords*RKHS_KernelSize,1/))),&
-                            (/3,NATOMS/))
-deallocate(Omega)
-print *, "sVVFwJ output:"
-do i = 1, Natoms
-    print *, weighted_gradient(:,i)
-end do
 end if
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -2642,12 +2524,14 @@ gridpath2 = gridpath0//Ngrid_text//"/grid/"
 if (gather_interpolation_flag) &
     open(filechannel3,file=gridpath5//interpolationfile,&
                       position="append")
-!   open(filechannel3,file=gridpath5//interpolationfile)
+    write(filechannel3,FMT="(2(A7,1x),A4,1x,5(A10,1x))")&
+            "CV1", "CV2", "Nint",&
+            "minRMSD", "minPDOTerr",&
+            "intR1", "intR2", "intPDOTerr"
 
 if (.true.) &
     open(filechannel4,file=gridpath5//"energydrift.dat",&
                       position="append")
-!   open(filechannel4,file=gridpath5//"energydrift.dat")
 
 if (readtrajectory_flag) then
     call system("cp "//&

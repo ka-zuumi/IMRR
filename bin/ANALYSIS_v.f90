@@ -8,7 +8,7 @@ implicit none
 
 !The name of this experiment
 integer,parameter :: expfolder_length = 56
-character(expfolder_length),parameter :: expfolder = "expcompareGradientsInGridtoNWChemGradients2_history3_20/"
+character(expfolder_length),parameter :: expfolder = "expcompareGradientsInGridtoNWChemGradients0_history3_20/"
 
 !Set the number of grids to be analyzed; will start at 001 and increment
 !If this number is larger than the number of grids in the folder,
