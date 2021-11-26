@@ -2,7 +2,7 @@
 
 The Interpolating Moving Ridge Regression (IMRR) predicts energy gradients of molecular geometries given some number of configurations with known energy gradients.
 
-The example below of the IMRR is for the bimolecular reaction between HBr<sup>+<sup> and CO<sub>2<sub>.
+The example below of the IMRR is for the bimolecular reaction between HBr<sup>+</sup> and CO<sub>2</sub>.
 A number of frames from previous ab initio molecular dynamics (AIMD) trajectories are consolidated and indexed in a "library".
 Here, they are indexed by two collective variables (CVs), the distance between the hydrogen and carbon, and the minimum distance between the oxygens and the bromine. The density of frames can be visualized over these two collective variables with a heatmap.
 A portion of the total number of frames are displayed below (those with CVs in the range (6,6) to (7,7)) as the light-green square.
