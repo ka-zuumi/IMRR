@@ -10,7 +10,7 @@ An example AIMD trajectory is shown as the black curve overlayed on the heatmap 
 
 ![Alt text](heatmapTrajectoryTrace.png?raw=true "Example Trajectory")
 
-By making use of this library, a number <it>Ninterpolation</it> of frames can be used as inputs for the IMRR to predict energy gradients along the AIMD trajectory. The manner and number of frames chosen are specified in the ANALYSIS.f90 file. By default, for each step along the trajectory, three previous consecutive frames are used as inputs for the IMRR. All others are taken from the library. Those steps along the trajectory with inputs taken from the library are highlighted in dark green. Two examples are provided; to compile them and run the first example, execute:
+By making use of this library, a number *Ninterpolation* of frames can be used as inputs for the IMRR to predict energy gradients along the AIMD trajectory. The manner and number of frames chosen are specified in the ANALYSIS.f90 file. By default, for each step along the trajectory, three previous consecutive frames are used as inputs for the IMRR. All others are taken from the library. Those steps along the trajectory with inputs taken from the library are highlighted in dark green. Two examples are provided; to compile them and run the first example, execute:
 
 ```
 ./build_IMRR.sh
