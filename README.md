@@ -1,9 +1,11 @@
 # Interpolating Moving Ridge Regression
 
-The Interpolating Moving Ridge Regression (IMRR) predicts energy gradients of molecular geometries given some number of configurations with known energy gradients.
+The Interpolating Moving Ridge Regression (IMRR) predicts energy gradients of molecular geometries given some number of configurations with known energy gradients. With the predictive risk, at any point during an *ab initio* molecular dynamics (AIMD) trajectory, the *ab initio* energy gradient can be substituted by a cheap IMRR predicted energy gradient provided the risk is low enough. An example AIMD trajectory for the bimolecular reaction between HBr<sup>+</sup> and CO<sub>2</sub> is shown below.
 
-The example below of the IMRR is for the bimolecular reaction between HBr<sup>+</sup> and CO<sub>2</sub>.
-A number of frames from previous ab initio molecular dynamics (AIMD) trajectories are consolidated and indexed in a "library".
+![Alt text](hbr+co2traj1.png?raw=true "Example Trajectory")
+
+AIMD studies are rigorous ways of exploring the configuration space of a system for machine learning methods, and here for IMRR.
+A number of frames from previous AIMD trajectories are consolidated and indexed in a "library".
 Here, they are indexed by two collective variables (CVs), the distance between the hydrogen and carbon, and the minimum distance between the oxygens and the bromine. The density of frames can be visualized over these two collective variables with a heatmap.
 A portion of the total number of frames are displayed below (those with CVs in the range (6,6) to (7,7)) as the light-green square.
 An example AIMD trajectory is shown as the black curve overlayed on the heatmap below.
