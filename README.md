@@ -10,9 +10,9 @@ The Interpolating Moving Ridge Regression (IMRR) predicts energy gradients of mo
 
 AIMD studies are rigorous ways of exploring the configuration space of a system for machine learning methods, and here for IMRR.
 A number of frames from previous AIMD trajectories are consolidated and indexed in a "library".
-Here, they are indexed by two collective variables (CVs), the distance between the hydrogen and carbon, and the minimum distance between the oxygens and the bromine. The density of frames can be visualized over these two collective variables with a heatmap.
-A portion of the total number of frames are displayed below (those with CVs in the range (6,6) to (7,7)) as the light-green square.
-An example AIMD trajectory is shown as the black curve overlayed on the heatmap below.
+Here, they are indexed by two collective variables (CVs), the distance between the hydrogen and carbon, and the minimum distance between the oxygens and the bromine. Along a trajectory, each frame can be visualized as a function of these two collective variables.
+A portion of the total library is stored in HBrCO2library/001/grid and displayed below (those with CVs in the range (6,6) to (7,7)) as the light-green square.
+An example AIMD trajectory is shown as the black curve overlayed on the graph below.
 
 ![Alt text](heatmapTrajectoryTrace.png?raw=true "Example Trajectory")
 
